@@ -13,7 +13,7 @@ using Segment = std::pair<integer, integer>;
 std::vector<Segment> readSegments(std::istream &in);
 void sortSegmentsByEnds(std::vector<Segment> &segments);
 integer findGreedyNewPoint(std::vector<Segment> &segments);
-void removePointWithPointInside(std::vector<Segment> &segments, integer point);
+void removeSegmentWithPointInside(std::vector<Segment> &segments, integer point);
 void printOptimalPointCovering(std::vector<integer> &points);
 
 int main() {
@@ -24,7 +24,7 @@ int main() {
     while (!segments.empty()) {
         auto newPoint = findGreedyNewPoint(segments);
         points.push_back(newPoint);
-        removePointWithPointInside(segments, newPoint);
+        removeSegmentWithPointInside(segments, newPoint);
     };
 
     printOptimalPointCovering(points);
@@ -62,7 +62,7 @@ integer findGreedyNewPoint(std::vector<Segment> &segments) {
     return segments.front().second;
 }
 
-void removePointWithPointInside(std::vector<Segment> &segments, integer point) {
+void removeSegmentWithPointInside(std::vector<Segment> &segments, integer point) {
     // Можно использовать факт сортированности массива более выразительно.
     auto it = std::find_if(std::begin(segments), std::end(segments), [point](auto segment) {
         if (segment.first > point)
